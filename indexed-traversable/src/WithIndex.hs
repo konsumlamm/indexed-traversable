@@ -41,9 +41,11 @@ import Data.Traversable              (Traversable (..))
 import Data.Tree                     (Tree (..))
 import Data.Void                     (Void)
 
+#ifdef __GLASGOW_HASKELL__
 import GHC.Generics
        (K1 (..), Par1 (..), Rec1 (..), U1 (..), V1, (:*:) (..), (:+:) (..),
        (:.:) (..))
+#endif
 
 import qualified Data.Array    as Array
 import qualified Data.IntMap   as IntMap
@@ -276,6 +278,7 @@ instance FunctorWithIndex k ((,) k) where
   imap f (k,a) = (k, f k a)
   {-# INLINE imap #-}
 
+#ifdef __GLASGOW_HASKELL__
 instance FoldableWithIndex k ((,) k) where
   ifoldMap = uncurry'
   {-# INLINE ifoldMap #-}
@@ -283,6 +286,7 @@ instance FoldableWithIndex k ((,) k) where
 instance TraversableWithIndex k ((,) k) where
   itraverse f (k, a) = (,) k <$> f k a
   {-# INLINE itraverse #-}
+#endif
 
 -- | The position in the list is available as the index.
 instance FunctorWithIndex Int [] where
@@ -559,6 +563,7 @@ instance TraversableWithIndex k (Map k) where
   itraverse = Map.traverseWithKey
   {-# INLINE itraverse #-}
 
+#ifdef __GLASGOW_HASKELL__
 -------------------------------------------------------------------------------
 -- GHC.Generics
 -------------------------------------------------------------------------------
@@ -659,6 +664,7 @@ instance FoldableWithIndex Void (K1 i c) where
 instance TraversableWithIndex Void (K1 i c) where
   itraverse _ (K1 a) = pure (K1 a)
   {-# INLINE itraverse #-}
+#endif
 
 -------------------------------------------------------------------------------
 -- Misc.

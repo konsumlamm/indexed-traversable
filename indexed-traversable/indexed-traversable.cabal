@@ -71,5 +71,5 @@ library
     , containers    >=0.6.0.1 && <0.8
     , transformers  >=0.5.6.0 && <0.7
 
-  if !impl(ghc >=9.6)
+  if !impl(ghc >=9.6) && !impl(mhs)
     build-depends: foldable1-classes-compat >=0.1 && <0.2
